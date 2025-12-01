@@ -1,5 +1,7 @@
 import './ProductList.css'
 import ProductCard from '../ProductCard/ProductCard'
+import { useCategory } from '../../context/CategoryContext'
+import { useSearch } from '../../context/SearchContext'
 
 // Тимчасові дані для демонстрації
 const products = [
@@ -78,15 +80,30 @@ const products = [
 ]
 
 function ProductList() {
+  const { activeCategory } = useCategory()
+  const { searchQuery } = useSearch()
+
+  // Фільтруємо товари по категорії та пошуку
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = activeCategory === null || product.category === activeCategory
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          product.description.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
+
   return (
     <section className="products">
       <div className="container">
         <h2 className="products__title">Меню</h2>
-        <div className="products__grid">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {filteredProducts.length === 0 ? (
+          <p className="products__empty">Товари не знайдено</p>
+        ) : (
+          <div className="products__grid">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

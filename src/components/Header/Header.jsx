@@ -1,6 +1,11 @@
 import './Header.css'
+import { useCart } from '../../context/CartContext'
+import { useSearch } from '../../context/SearchContext'
 
-function Header() {
+function Header({ onCartClick }) {
+  const { cartCount } = useCart()
+  const { searchQuery, setSearchQuery } = useSearch()
+
   return (
     <header className="header">
       <div className="container header__container">
@@ -14,13 +19,15 @@ function Header() {
             type="text"
             className="header__search-input"
             placeholder="Пошук страв..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
         <div className="header__cart">
-          <button className="header__cart-btn">
+          <button className="header__cart-btn" onClick={onCartClick}>
             <span className="header__cart-icon">🛒</span>
-            <span className="header__cart-count">0</span>
+            <span className="header__cart-count">{cartCount}</span>
           </button>
         </div>
       </div>

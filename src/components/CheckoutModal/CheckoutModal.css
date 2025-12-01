@@ -1,0 +1,149 @@
+/* Checkout Modal */
+.checkout-modal {
+  background-color: #fff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.checkout-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.checkout-modal__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.checkout-modal__close {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.checkout-modal__close:hover {
+  background-color: #e0e0e0;
+}
+
+.checkout-modal__content {
+  padding: 25px;
+  overflow-y: auto;
+}
+
+/* Form */
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkout-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkout-form__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.checkout-form__input,
+.checkout-form__textarea {
+  padding: 14px 18px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.checkout-form__input:focus,
+.checkout-form__textarea:focus {
+  border-color: #ff6b35;
+}
+
+.checkout-form__textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.checkout-form__summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  font-size: 18px;
+}
+
+.checkout-form__total {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ff6b35;
+}
+
+.checkout-form__submit {
+  padding: 18px;
+  border: none;
+  background-color: #ff6b35;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.checkout-form__submit:hover {
+  background-color: #e55a2b;
+}
+
+/* Success */
+.checkout-success {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.checkout-success__text {
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.checkout-success__btn {
+  padding: 15px 30px;
+  border: none;
+  background-color: #ff6b35;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.checkout-success__btn:hover {
+  background-color: #e55a2b;
+}

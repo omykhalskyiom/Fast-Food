@@ -10,6 +10,13 @@
   margin: 0 0 25px 0;
 }
 
+.products__empty {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  padding: 40px 0;
+}
+
 /* Grid */
 .products__grid {
   display: grid;
