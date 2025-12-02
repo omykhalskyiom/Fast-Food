@@ -6,6 +6,7 @@ import ProductList from './components/ProductList/ProductList'
 import Footer from './components/Footer/Footer'
 import CartModal from './components/CartModal/CartModal'
 import CheckoutModal from './components/CheckoutModal/CheckoutModal'
+import ScrollToTop from './components/ScrollToTop/ScrollToTop'
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -38,6 +39,7 @@ function App() {
         isOpen={isCheckoutOpen}
         onClose={handleCheckoutClose}
       />
+      <ScrollToTop />
     </>
   )
 }

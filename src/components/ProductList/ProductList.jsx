@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import './ProductList.css'
 import ProductCard from '../ProductCard/ProductCard'
 import { useCategory } from '../../context/CategoryContext'
@@ -13,6 +14,7 @@ const products = [
     price: 89,
     image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500',
     category: 1,
+    badge: 'hit',
   },
   {
     id: 2,
@@ -22,6 +24,7 @@ const products = [
     price: 139,
     image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=500',
     category: 1,
+    badge: 'new',
   },
   {
     id: 3,
@@ -40,6 +43,7 @@ const products = [
     price: 179,
     image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=500',
     category: 2,
+    badge: 'hit',
   },
   {
     id: 5,
@@ -49,6 +53,7 @@ const products = [
     price: 59,
     image: 'https://images.unsplash.com/photo-1612392062631-94f8b11a7ae5?w=500',
     category: 3,
+    badge: 'sale',
   },
   {
     id: 6,
@@ -76,6 +81,7 @@ const products = [
     price: 39,
     image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500',
     category: 6,
+    badge: 'new',
   },
 ]
 
@@ -83,13 +89,15 @@ function ProductList() {
   const { activeCategory } = useCategory()
   const { searchQuery } = useSearch()
 
-  // Фільтруємо товари по категорії та пошуку
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory = activeCategory === null || product.category === activeCategory
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
+  // Мемоізуємо фільтрацію для оптимізації
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const matchesCategory = activeCategory === null || product.category === activeCategory
+      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            product.description.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesCategory && matchesSearch
+    })
+  }, [activeCategory, searchQuery])
 
   return (
     <section className="products">
