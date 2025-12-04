@@ -7,6 +7,8 @@ import Footer from './components/Footer/Footer'
 import CartModal from './components/CartModal/CartModal'
 import CheckoutModal from './components/CheckoutModal/CheckoutModal'
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
+import './components/ErrorBoundary/ErrorBoundary.css'
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -22,7 +24,7 @@ function App() {
   const handleCheckoutClose = () => setIsCheckoutOpen(false)
 
   return (
-    <>
+    <ErrorBoundary>
       <Header onCartClick={handleCartOpen} />
       <Categories />
       <main className="main">
@@ -40,7 +42,7 @@ function App() {
         onClose={handleCheckoutClose}
       />
       <ScrollToTop />
-    </>
+    </ErrorBoundary>
   )
 }
 

@@ -1,0 +1,28 @@
+/* Theme Toggle Button */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(15deg);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

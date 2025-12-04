@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import './CheckoutModal.css'
 import { useCart } from '../../context/CartContext'
 import { useToast } from '../../context/ToastContext'
@@ -14,6 +14,24 @@ function CheckoutModal({ isOpen, onClose }) {
   })
   const [errors, setErrors] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  // Закриття по Escape
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === 'Escape') {
+      onClose()
+    }
+  }, [onClose])
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isOpen, handleKeyDown])
 
   if (!isOpen) return null
 
@@ -75,13 +93,13 @@ function CheckoutModal({ isOpen, onClose }) {
   }
 
   return (
-    <div className="modal-overlay" onClick={handleClose}>
+    <div className="modal-overlay" onClick={handleClose} role="dialog" aria-modal="true" aria-labelledby="checkout-title">
       <div className="checkout-modal" onClick={(e) => e.stopPropagation()}>
         <div className="checkout-modal__header">
-          <h2 className="checkout-modal__title">
+          <h2 className="checkout-modal__title" id="checkout-title">
             {isSubmitted ? '✅ Дякуємо!' : '📝 Оформлення замовлення'}
           </h2>
-          <button className="checkout-modal__close" onClick={handleClose}>×</button>
+          <button className="checkout-modal__close" onClick={handleClose} aria-label="Закрити">×</button>
         </div>
 
         <div className="checkout-modal__content">

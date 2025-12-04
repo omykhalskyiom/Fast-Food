@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import './CartModal.css'
 import { useCart } from '../../context/CartContext'
 import { useToast } from '../../context/ToastContext'
@@ -9,6 +9,30 @@ function CartModal({ isOpen, onClose, onCheckout }) {
   const [removingId, setRemovingId] = useState(null)
   const [showClearConfirm, setShowClearConfirm] = useState(false)
   const [itemToDelete, setItemToDelete] = useState(null)
+
+  // Закриття по Escape
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === 'Escape') {
+      if (itemToDelete) {
+        setItemToDelete(null)
+      } else if (showClearConfirm) {
+        setShowClearConfirm(false)
+      } else {
+        onClose()
+      }
+    }
+  }, [onClose, itemToDelete, showClearConfirm])
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isOpen, handleKeyDown])
 
   if (!isOpen) return null
 
@@ -29,11 +53,11 @@ function CartModal({ isOpen, onClose, onCheckout }) {
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="cart-title">
       <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
         <div className="cart-modal__header">
-          <h2 className="cart-modal__title">🛒 Кошик</h2>
-          <button className="cart-modal__close" onClick={onClose}>
+          <h2 className="cart-modal__title" id="cart-title">🛒 Кошик</h2>
+          <button className="cart-modal__close" onClick={onClose} aria-label="Закрити кошик">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>

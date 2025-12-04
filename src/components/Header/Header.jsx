@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './Header.css'
 import { useCart } from '../../context/CartContext'
 import { useSearch } from '../../context/SearchContext'
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 function Header({ onCartClick }) {
   const { cartCount } = useCart()
@@ -16,6 +17,8 @@ function Header({ onCartClick }) {
         <button 
           className={`header__burger ${isMobileMenuOpen ? 'active' : ''}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Відкрити меню"
+          aria-expanded={isMobileMenuOpen}
         >
           <span></span>
           <span></span>
@@ -39,16 +42,19 @@ function Header({ onCartClick }) {
         </div>
 
         <div className="header__actions">
+          <ThemeToggle />
+          
           {/* Mobile Search Toggle */}
           <button 
             className="header__search-toggle"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
+            aria-label="Пошук"
           >
             🔍
           </button>
 
           <div className="header__cart">
-            <button className="header__cart-btn" onClick={onCartClick}>
+            <button className="header__cart-btn" onClick={onCartClick} aria-label={`Кошик, ${cartCount} товарів`}>
               <span className="header__cart-icon">🛒</span>
               <span className="header__cart-count">{cartCount}</span>
             </button>

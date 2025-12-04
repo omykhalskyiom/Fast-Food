@@ -1,9 +1,9 @@
 /* Categories */
 .categories {
-  background-color: #fff;
+  background-color: var(--bg-secondary);
   padding: 20px 0;
   margin-top: 70px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .categories__list {
@@ -26,7 +26,7 @@
   align-items: center;
   gap: 8px;
   padding: 15px 25px;
-  background-color: #f5f5f5;
+  background-color: var(--bg-primary);
   border: 2px solid transparent;
   border-radius: 15px;
   cursor: pointer;
@@ -34,14 +34,14 @@
 }
 
 .categories__btn:hover {
-  background-color: #fff;
-  border-color: #ff6b35;
+  background-color: var(--bg-card);
+  border-color: var(--accent-color);
   transform: translateY(-3px);
 }
 
 .categories__btn.active {
-  background-color: #ff6b35;
-  border-color: #ff6b35;
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 .categories__btn.active .categories__name {
@@ -55,5 +55,5 @@
 .categories__name {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
