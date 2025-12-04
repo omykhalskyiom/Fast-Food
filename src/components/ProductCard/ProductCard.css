@@ -126,9 +126,17 @@
   transform: scale(1.05);
 }
 
+.product-card__btn--in-cart {
+  background-color: #4caf50;
+}
+
+.product-card__btn--in-cart:hover {
+  background-color: #43a047;
+}
+
 .product-card__qty {
   background-color: #fff;
-  color: #ff6b35;
+  color: #4caf50;
   width: 22px;
   height: 22px;
   border-radius: 50%;

@@ -35,7 +35,10 @@ const ProductCard = memo(function ProductCard({ product }) {
       </div>
       <div className="product-card__footer">
         <span className="product-card__price">{product.price} грн</span>
-        <button className="product-card__btn" onClick={handleAddToCart}>
+        <button 
+          className={`product-card__btn ${quantity > 0 ? 'product-card__btn--in-cart' : ''}`} 
+          onClick={handleAddToCart}
+        >
           {quantity > 0 ? (
             <span className="product-card__qty">{quantity}</span>
           ) : (

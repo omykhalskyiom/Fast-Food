@@ -1,26 +1,66 @@
 import { useState } from 'react'
 import './CheckoutModal.css'
 import { useCart } from '../../context/CartContext'
+import { useToast } from '../../context/ToastContext'
 
 function CheckoutModal({ isOpen, onClose }) {
   const { cartItems, cartTotal, clearCart } = useCart()
+  const { addToast } = useToast()
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     address: '',
     comment: '',
   })
+  const [errors, setErrors] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   if (!isOpen) return null
 
+  // Валідація телефону (українські номери)
+  const validatePhone = (phone) => {
+    // Видаляємо всі символи крім цифр і +
+    const cleaned = phone.replace(/[^\d+]/g, '')
+    // Перевіряємо формат: +380XXXXXXXXX або 0XXXXXXXXX
+    const phoneRegex = /^(\+380|380|0)\d{9}$/
+    return phoneRegex.test(cleaned)
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    // Очищаємо помилку при зміні
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }))
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    
+    // Валідація
+    const newErrors = {}
+    
+    if (!formData.name.trim()) {
+      newErrors.name = "Введіть ім'я"
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Введіть номер телефону'
+    } else if (!validatePhone(formData.phone)) {
+      newErrors.phone = 'Невірний формат телефону (напр. +380991234567)'
+    }
+    
+    if (!formData.address.trim()) {
+      newErrors.address = 'Введіть адресу доставки'
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      addToast('Перевірте правильність заповнення форми', 'error')
+      return
+    }
+    
     // Тут можна додати відправку на сервер
     console.log('Замовлення:', { ...formData, items: cartItems, total: cartTotal })
     setIsSubmitted(true)
@@ -30,6 +70,7 @@ function CheckoutModal({ isOpen, onClose }) {
   const handleClose = () => {
     setIsSubmitted(false)
     setFormData({ name: '', phone: '', address: '', comment: '' })
+    setErrors({})
     onClose()
   }
 
@@ -61,12 +102,12 @@ function CheckoutModal({ isOpen, onClose }) {
                 <input
                   type="text"
                   name="name"
-                  className="checkout-form__input"
+                  className={`checkout-form__input ${errors.name ? 'checkout-form__input--error' : ''}`}
                   placeholder="Ваше ім'я"
                   value={formData.name}
                   onChange={handleChange}
-                  required
                 />
+                {errors.name && <span className="checkout-form__error">{errors.name}</span>}
               </div>
 
               <div className="checkout-form__group">
@@ -74,12 +115,12 @@ function CheckoutModal({ isOpen, onClose }) {
                 <input
                   type="tel"
                   name="phone"
-                  className="checkout-form__input"
+                  className={`checkout-form__input ${errors.phone ? 'checkout-form__input--error' : ''}`}
                   placeholder="+380 XX XXX XX XX"
                   value={formData.phone}
                   onChange={handleChange}
-                  required
                 />
+                {errors.phone && <span className="checkout-form__error">{errors.phone}</span>}
               </div>
 
               <div className="checkout-form__group">
@@ -87,12 +128,12 @@ function CheckoutModal({ isOpen, onClose }) {
                 <input
                   type="text"
                   name="address"
-                  className="checkout-form__input"
+                  className={`checkout-form__input ${errors.address ? 'checkout-form__input--error' : ''}`}
                   placeholder="Вулиця, будинок, квартира"
                   value={formData.address}
                   onChange={handleChange}
-                  required
                 />
+                {errors.address && <span className="checkout-form__error">{errors.address}</span>}
               </div>
 
               <div className="checkout-form__group">
